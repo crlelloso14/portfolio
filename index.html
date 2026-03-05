@@ -1,0 +1,599 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cyril Santos | Medical Virtual Assistant Portfolio</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+tailwind.config = {
+theme: {
+extend: {
+colors: {
+primary: '#2C3E50',
+secondary: '#3498DB',
+accent: '#EBF2FA',
+textmain: '#333333',
+textlight: '#666666'
+},
+fontFamily: {
+sans: ['Inter', 'ui-sans-serif', 'system-ui', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'Helvetica Neue', 'Arial', 'sans-serif'],
+}
+}
+}
+}
+</script>
+<style>
+body {
+background-color: #F8FAFC;
+color: #333333;
+scroll-behavior: smooth;
+}
+.chart-container {
+position: relative;
+width: 100%;
+max-width: 300px;
+margin-left: auto;
+margin-right: auto;
+height: 250px;
+max-height: 300px;
+}
+@media (min-width: 768px) {
+.chart-container {
+height: 300px;
+}
+}
+.glass-card {
+background: rgba(255, 255, 255, 0.95);
+backdrop-filter: blur(10px);
+border: 1px solid rgba(255, 255, 255, 0.2);
+box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+}
+.nav-link.active {
+color: #3498DB;
+border-bottom: 2px solid #3498DB;
+}
+.tab-content {
+display: none;
+}
+.tab-content.active {
+display: block;
+animation: fadeIn 0.3s ease-in-out;
+}
+.tab-btn.active {
+background-color: #2C3E50;
+color: #ffffff;
+}
+@keyframes fadeIn {
+from { opacity: 0; transform: translateY(5px); }
+to { opacity: 1; transform: translateY(0); }
+}
+.timeline-content {
+max-height: 0;
+overflow: hidden;
+transition: max-height 0.3s ease-out;
+}
+.timeline-content.expanded {
+max-height: 500px;
+}
+</style>
+</head>
+<body class="font-sans antialiased text-textmain">
+
+<!-- Chosen Palette: Clinical Blue & White (#2C3E50, #3498DB, #EBF2FA, #F8FAFC, #FFFFFF) -->
+<!-- Application Structure Plan: The SPA is structured as a scrolling interactive portfolio, tailored for a Medical Virtual Assistant. It uses a sticky navigation bar to guide users through key sections: Hero (Introduction), Impact (Quantitative achievements using interactive charts), Expertise (Categorized skills via interactive tabs), and Experience (Interactive timeline for work history). This structure was chosen because it immediately presents the value proposition, validates it with data, organizes complex skills cleanly, and provides a chronological proof of experience, optimizing the user flow for potential employers or clients in the healthcare sector. -->
+<!-- Visualization & Content Choices: 
+1. Impact Metrics -> Goal: Inform & Impress -> Viz: Chart.js Doughnut Charts -> Interaction: Hover tooltips -> Justification: Doughnut charts effectively visualize percentages (99.9% accuracy, 20% increase) in a clean, modern way without overwhelming the user. 
+2. Core Skills -> Goal: Organize -> Viz: Interactive Tabs -> Interaction: Click to switch categories -> Justification: Prevents a massive wall of text; allows users to explore specific skill sets (EMR vs. Admin).
+3. Experience -> Goal: Sequence & Detail -> Viz: Interactive Timeline Accordions -> Interaction: Click to expand details -> Justification: Keeps the UI clean while allowing drill-down into specific roles.
+Library/Method: Chart.js for charts, Vanilla JS for tabs/accordions, Tailwind for layout.
+-->
+<!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+
+<nav class="fixed w-full z-50 glass-card transition-all duration-300 border-b border-gray-200">
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+<div class="flex justify-between h-20">
+<div class="flex items-center">
+<span class="text-2xl font-bold text-primary tracking-tight">Cyril<span class="text-secondary">Santos</span></span>
+</div>
+<div class="hidden md:flex items-center space-x-8">
+<a href="#home" class="nav-link text-gray-600 hover:text-secondary font-medium transition-colors py-2 active">Home</a>
+<a href="#impact" class="nav-link text-gray-600 hover:text-secondary font-medium transition-colors py-2">My Impact</a>
+<a href="#expertise" class="nav-link text-gray-600 hover:text-secondary font-medium transition-colors py-2">Expertise</a>
+<a href="#experience" class="nav-link text-gray-600 hover:text-secondary font-medium transition-colors py-2">Experience</a>
+<a href="#contact" class="bg-secondary hover:bg-primary text-white px-6 py-2 rounded-full font-medium transition-colors duration-300">Connect</a>
+</div>
+</div>
+</div>
+</nav>
+
+<section id="home" class="pt-32 pb-20 lg:pt-48 lg:pb-32 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto flex flex-col-reverse lg:flex-row items-center gap-12">
+<div class="lg:w-3/5 flex flex-col justify-center">
+<div class="inline-block bg-accent text-primary px-4 py-1.5 rounded-full font-semibold text-sm mb-6 w-max border border-blue-100">
+Specialized Medical Virtual Assistant
+</div>
+<h1 class="text-4xl sm:text-5xl lg:text-6xl font-bold leading-tight mb-6 text-primary">
+Bridging the gap between <span class="text-secondary">patient care</span> and administrative excellence.
+</h1>
+<p class="text-lg text-textlight mb-8 leading-relaxed max-w-2xl">
+I’m a detail-oriented healthcare professional with over 5 years of experience supporting U.S. and Australian providers. My goal is simple: to handle the "behind-the-scenes" chaos—scheduling, documentation, and billing—so that you can focus 100% on your patients. I bring a mix of technical precision and genuine empathy to every interaction.
+</p>
+<div class="flex flex-wrap gap-4">
+<a href="#contact" class="bg-primary hover:bg-secondary text-white px-8 py-3 rounded-lg font-semibold transition-colors duration-300 shadow-lg text-center">
+Get in Touch
+</a>
+<a href="#expertise" class="bg-white border-2 border-primary text-primary hover:bg-accent px-8 py-3 rounded-lg font-semibold transition-colors duration-300 text-center">
+Explore My Skills
+</a>
+</div>
+<div class="mt-10 flex gap-8 border-t border-gray-200 pt-6">
+<div>
+<p class="font-bold text-2xl text-primary">5+</p>
+<p class="text-sm text-textlight">Years Experience</p>
+</div>
+<div>
+<p class="font-bold text-2xl text-primary">100%</p>
+<p class="text-sm text-textlight">HIPAA Compliant</p>
+</div>
+<div>
+<p class="font-bold text-2xl text-primary">99.9%</p>
+<p class="text-sm text-textlight">Record Accuracy</p>
+</div>
+</div>
+</div>
+<div class="lg:w-2/5 flex justify-center">
+<div class="relative w-72 h-72 sm:w-96 sm:h-96 bg-accent rounded-full flex items-center justify-center border-8 border-white shadow-2xl overflow-hidden">
+<span class="text-9xl text-secondary opacity-20 absolute font-serif">&ldquo;</span>
+<div class="text-center z-10 px-8">
+<span class="text-6xl block mb-4">🩺</span>
+<p class="text-primary font-bold text-xl">Dedicated Partner in Your Practice's Success</p>
+</div>
+</div>
+</div>
+</section>
+
+<section id="impact" class="py-20 bg-white">
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+<div class="text-center mb-16">
+<h2 class="text-3xl sm:text-4xl font-bold text-primary mb-4">The Impact of Process</h2>
+<p class="text-lg text-textlight max-w-3xl mx-auto">
+This section highlights the quantitative results I've delivered throughout my career. By optimizing workflows and maintaining strict attention to detail, I help clinics operate more efficiently and profitably. Hover over the charts to see the specific metrics.
+</p>
+</div>
+
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
+<div class="glass-card p-8 rounded-2xl flex flex-col items-center">
+<h3 class="text-xl font-bold text-primary mb-2">Record Accuracy</h3>
+<p class="text-sm text-textlight text-center mb-6">Indexing thousands of documents weekly</p>
+<div class="chart-container">
+<canvas id="accuracyChart"></canvas>
+</div>
+</div>
+
+<div class="glass-card p-8 rounded-2xl flex flex-col items-center">
+<h3 class="text-xl font-bold text-primary mb-2">Claim Resolution</h3>
+<p class="text-sm text-textlight text-center mb-6">Increase in resolution rates via research</p>
+<div class="chart-container">
+<canvas id="resolutionChart"></canvas>
+</div>
+</div>
+
+<div class="glass-card p-8 rounded-2xl flex flex-col items-center">
+<h3 class="text-xl font-bold text-primary mb-2">Patient Satisfaction</h3>
+<p class="text-sm text-textlight text-center mb-6">Boost in satisfaction via rapid support</p>
+<div class="chart-container">
+<canvas id="satisfactionChart"></canvas>
+</div>
+</div>
+</div>
+</div>
+</section>
+
+<section id="expertise" class="py-20 bg-accent bg-opacity-30">
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+<div class="mb-16">
+<h2 class="text-3xl sm:text-4xl font-bold text-primary mb-4">Core Expertise & Systems</h2>
+<p class="text-lg text-textlight max-w-3xl">
+My skill set bridges clinical documentation, patient coordination, and revenue cycle management. Select a category below to explore the specific functions and platforms I utilize to keep healthcare operations running seamlessly.
+</p>
+</div>
+
+<div class="flex flex-wrap gap-2 mb-8 border-b border-gray-300 pb-4">
+<button class="tab-btn active px-6 py-2 rounded-full font-medium transition-colors bg-white text-primary border border-gray-300 shadow-sm" data-target="admin">Administration</button>
+<button class="tab-btn px-6 py-2 rounded-full font-medium transition-colors bg-white text-primary border border-gray-300 shadow-sm hover:bg-gray-50" data-target="clinical">Clinical & Compliance</button>
+<button class="tab-btn px-6 py-2 rounded-full font-medium transition-colors bg-white text-primary border border-gray-300 shadow-sm hover:bg-gray-50" data-target="rcm">Revenue Cycle (RCM)</button>
+<button class="tab-btn px-6 py-2 rounded-full font-medium transition-colors bg-white text-primary border border-gray-300 shadow-sm hover:bg-gray-50" data-target="tech">Tech Stack</button>
+</div>
+
+<div id="admin" class="tab-content active glass-card p-8 rounded-2xl">
+<h3 class="text-2xl font-bold text-primary mb-6 flex items-center gap-3"><span class="text-3xl">📅</span> Patient Coordination & Admin</h3>
+<ul class="grid grid-cols-1 md:grid-cols-2 gap-4">
+<li class="flex items-start gap-3">
+<span class="text-secondary font-bold mt-1">&#10003;</span>
+<p class="text-lg text-textmain"><strong>Patient Scheduling:</strong> Orchestrating complex calendars to minimize conflicts.</p>
+</li>
+<li class="flex items-start gap-3">
+<span class="text-secondary font-bold mt-1">&#10003;</span>
+<p class="text-lg text-textmain"><strong>High-Volume Management:</strong> Handling 150+ patient appointments weekly efficiently.</p>
+</li>
+<li class="flex items-start gap-3">
+<span class="text-secondary font-bold mt-1">&#10003;</span>
+<p class="text-lg text-textmain"><strong>Multi-Channel Support:</strong> Providing prompt patient communication via Chat, Email, SMS, and Phone.</p>
+</li>
+<li class="flex items-start gap-3">
+<span class="text-secondary font-bold mt-1">&#10003;</span>
+<p class="text-lg text-textmain"><strong>Workflow Optimization:</strong> Streamlining front-desk and remote administrative tasks.</p>
+</li>
+</ul>
+</div>
+
+<div id="clinical" class="tab-content glass-card p-8 rounded-2xl">
+<h3 class="text-2xl font-bold text-primary mb-6 flex items-center gap-3"><span class="text-3xl">📁</span> Clinical Documentation & Compliance</h3>
+<ul class="grid grid-cols-1 md:grid-cols-2 gap-4">
+<li class="flex items-start gap-3">
+<span class="text-secondary font-bold mt-1">&#10003;</span>
+<p class="text-lg text-textmain"><strong>Medical Documentation:</strong> Maintaining precise and organized patient records.</p>
+</li>
+<li class="flex items-start gap-3">
+<span class="text-secondary font-bold mt-1">&#10003;</span>
+<p class="text-lg text-textmain"><strong>Regulatory Compliance:</strong> Strict adherence to HIPAA and Allied Health Standards.</p>
+</li>
+<li class="flex items-start gap-3">
+<span class="text-secondary font-bold mt-1">&#10003;</span>
+<p class="text-lg text-textmain"><strong>Provider Credentialing:</strong> Supporting credentialing and onboarding processes.</p>
+</li>
+<li class="flex items-start gap-3">
+<span class="text-secondary font-bold mt-1">&#10003;</span>
+<p class="text-lg text-textmain"><strong>Medical Terminology:</strong> Fluency in clinical language ensuring accurate data entry.</p>
+</li>
+</ul>
+</div>
+
+<div id="rcm" class="tab-content glass-card p-8 rounded-2xl">
+<h3 class="text-2xl font-bold text-primary mb-6 flex items-center gap-3"><span class="text-3xl">💳</span> Billing & Revenue Cycle</h3>
+<ul class="grid grid-cols-1 md:grid-cols-2 gap-4">
+<li class="flex items-start gap-3">
+<span class="text-secondary font-bold mt-1">&#10003;</span>
+<p class="text-lg text-textmain"><strong>Insurance Verification:</strong> Checking eligibility for major payers (Aetna, UHC, Cigna, BCBS).</p>
+</li>
+<li class="flex items-start gap-3">
+<span class="text-secondary font-bold mt-1">&#10003;</span>
+<p class="text-lg text-textmain"><strong>Claims Processing:</strong> Submitting and tracking medical claims for timely reimbursement.</p>
+</li>
+<li class="flex items-start gap-3">
+<span class="text-secondary font-bold mt-1">&#10003;</span>
+<p class="text-lg text-textmain"><strong>Discrepancy Resolution:</strong> Researching and resolving denied or pending claims.</p>
+</li>
+<li class="flex items-start gap-3">
+<span class="text-secondary font-bold mt-1">&#10003;</span>
+<p class="text-lg text-textmain"><strong>Billing Reconciliation:</strong> Aligning visit documentation with billing requirements.</p>
+</li>
+</ul>
+</div>
+
+<div id="tech" class="tab-content glass-card p-8 rounded-2xl">
+<h3 class="text-2xl font-bold text-primary mb-6 flex items-center gap-3"><span class="text-3xl">💻</span> Systems & Platforms</h3>
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-8">
+<div>
+<h4 class="font-bold text-lg mb-4 text-secondary border-b pb-2">EMR / EHR Systems</h4>
+<div class="flex flex-wrap gap-2">
+<span class="bg-gray-100 text-primary px-3 py-1 rounded-md text-sm font-medium">Healthie</span>
+<span class="bg-gray-100 text-primary px-3 py-1 rounded-md text-sm font-medium">RGH</span>
+<span class="bg-gray-100 text-primary px-3 py-1 rounded-md text-sm font-medium">OnBase</span>
+<span class="bg-gray-100 text-primary px-3 py-1 rounded-md text-sm font-medium">Ecase</span>
+<span class="bg-gray-100 text-primary px-3 py-1 rounded-md text-sm font-medium">TurnPoint</span>
+</div>
+</div>
+<div>
+<h4 class="font-bold text-lg mb-4 text-secondary border-b pb-2">Operations & Communication</h4>
+<div class="flex flex-wrap gap-2">
+<span class="bg-gray-100 text-primary px-3 py-1 rounded-md text-sm font-medium">Salesforce</span>
+<span class="bg-gray-100 text-primary px-3 py-1 rounded-md text-sm font-medium">Zendesk</span>
+<span class="bg-gray-100 text-primary px-3 py-1 rounded-md text-sm font-medium">Intercom</span>
+<span class="bg-gray-100 text-primary px-3 py-1 rounded-md text-sm font-medium">Slack</span>
+<span class="bg-gray-100 text-primary px-3 py-1 rounded-md text-sm font-medium">Zoom</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+
+<section id="experience" class="py-20 bg-white">
+<div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+<div class="text-center mb-16">
+<h2 class="text-3xl sm:text-4xl font-bold text-primary mb-4">Professional Experience</h2>
+<p class="text-lg text-textlight">
+Click on any role below to expand and view the detailed responsibilities and achievements from my career journey.
+</p>
+</div>
+
+<div class="space-y-4">
+
+<div class="border border-gray-200 rounded-lg overflow-hidden bg-white shadow-sm hover:shadow-md transition-shadow">
+<button class="timeline-btn w-full px-6 py-5 text-left flex justify-between items-center bg-gray-50 hover:bg-accent transition-colors focus:outline-none" onclick="toggleTimeline(this)">
+<div>
+<h3 class="text-xl font-bold text-primary">Customer Care Associate</h3>
+<p class="text-secondary font-medium mt-1">Berry Street (Independent Contractor) <span class="text-gray-400 mx-2">|</span> Aug 2023 - Dec 2026</p>
+</div>
+<span class="text-2xl text-primary font-light toggle-icon">+</span>
+</button>
+<div class="timeline-content bg-white px-6">
+<ul class="py-5 space-y-3 text-textmain list-disc pl-5">
+<li>Managed provider calendars and coordinated 150+ patient appointments weekly ensuring efficient scheduling and minimal conflicts.</li>
+<li>Delivered multi-channel support to patients and providers via chat, email, SMS, and phone, resolving scheduling, billing, and care coordination inquiries in a timely manner.</li>
+<li>Verified insurance eligibility and communicated billing requirements clearly, improving billing accuracy and reducing claim errors.</li>
+<li>Maintained accurate documentation and supported credentialing and compliance processes, contributing to a 15% increase in patient satisfaction.</li>
+</ul>
+</div>
+</div>
+
+<div class="border border-gray-200 rounded-lg overflow-hidden bg-white shadow-sm hover:shadow-md transition-shadow">
+<button class="timeline-btn w-full px-6 py-5 text-left flex justify-between items-center bg-gray-50 hover:bg-accent transition-colors focus:outline-none" onclick="toggleTimeline(this)">
+<div>
+<h3 class="text-xl font-bold text-primary">Allied Health Coordinator</h3>
+<p class="text-secondary font-medium mt-1">MCWA (Independent Contractor) <span class="text-gray-400 mx-2">|</span> Apr 2022 - July 2023</p>
+</div>
+<span class="text-2xl text-primary font-light toggle-icon">+</span>
+</button>
+<div class="timeline-content bg-white px-6">
+<ul class="py-5 space-y-3 text-textmain list-disc pl-5">
+<li>Coordinated weekly schedules for 50+ clients and maintained accurate documentation across multiple in-home care programs.</li>
+<li>Managed shared inboxes, addressed client inquiries, and ensured timely communication with practitioners and care teams.</li>
+<li>Organized records, updated client files, and supported compliance with Australian home care standards.</li>
+<li>Assisted with administrative reporting, data entry, and reconciliation of visit documentation to support accurate billing.</li>
+</ul>
+</div>
+</div>
+
+<div class="border border-gray-200 rounded-lg overflow-hidden bg-white shadow-sm hover:shadow-md transition-shadow">
+<button class="timeline-btn w-full px-6 py-5 text-left flex justify-between items-center bg-gray-50 hover:bg-accent transition-colors focus:outline-none" onclick="toggleTimeline(this)">
+<div>
+<h3 class="text-xl font-bold text-primary">Sr. Analyst - Performance Monitoring | Analyst - RCM</h3>
+<p class="text-secondary font-medium mt-1">Cardinal Health International, Philippines <span class="text-gray-400 mx-2">|</span> Sep 2021 - Mar 2022</p>
+</div>
+<span class="text-2xl text-primary font-light toggle-icon">+</span>
+</button>
+<div class="timeline-content bg-white px-6">
+<ul class="py-5 space-y-3 text-textmain list-disc pl-5">
+<li>Processed 100+ diabetic supply claims daily with high accuracy of financial and patient data.</li>
+<li>Researched and resolved claim discrepancies, increasing claim resolution rates by 20%.</li>
+<li>Followed up on pending claims and coordinated with internal teams to improve turnaround times.</li>
+<li>Ensured billing documentation met payer requirements and supported timely collections.</li>
+</ul>
+</div>
+</div>
+
+<div class="border border-gray-200 rounded-lg overflow-hidden bg-white shadow-sm hover:shadow-md transition-shadow">
+<button class="timeline-btn w-full px-6 py-5 text-left flex justify-between items-center bg-gray-50 hover:bg-accent transition-colors focus:outline-none" onclick="toggleTimeline(this)">
+<div>
+<h3 class="text-xl font-bold text-primary">Process Associate</h3>
+<p class="text-secondary font-medium mt-1">Tata Consultancy Services, Philippines <span class="text-gray-400 mx-2">|</span> Aug 2019 - Aug 2021</p>
+</div>
+<span class="text-2xl text-primary font-light toggle-icon">+</span>
+</button>
+<div class="timeline-content bg-white px-6">
+<ul class="py-5 space-y-3 text-textmain list-disc pl-5">
+<li>Indexed and reviewed thousands of patient documents weekly with 99.9% accuracy.</li>
+<li>Maintained organized electronic health records in compliance with HIPAA and internal standards.</li>
+</ul>
+</div>
+</div>
+
+<div class="mt-12 bg-accent rounded-xl p-8 border border-blue-100">
+<h3 class="text-xl font-bold text-primary mb-2 flex items-center gap-2"><span class="text-2xl">🎓</span> Education</h3>
+<p class="text-lg font-medium text-textmain">Bachelor of Science in Business Administration, Marketing Management</p>
+<p class="text-secondary">Rizal Technological University | 2015 - 2019</p>
+</div>
+
+</div>
+</div>
+</section>
+
+<section id="contact" class="py-20 bg-primary text-white">
+<div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+<h2 class="text-3xl sm:text-4xl font-bold mb-6">Ready to streamline your operations?</h2>
+<p class="text-lg text-blue-200 mb-10 max-w-2xl mx-auto">
+I am currently available for new opportunities. Whether you need immediate help clearing an intake backlog or long-term coordination support, let's discuss how my process-driven approach can benefit your team.
+</p>
+
+<div class="flex flex-col md:flex-row justify-center items-center gap-8 mb-12">
+<div class="flex items-center gap-3 bg-white bg-opacity-10 px-6 py-4 rounded-lg w-full md:w-auto hover:bg-opacity-20 transition-all cursor-pointer">
+<span class="text-2xl">✉️</span>
+<a href="mailto:vacyril.santos@gmail.com" class="font-medium text-lg">vacyril.santos@gmail.com</a>
+</div>
+<div class="flex items-center gap-3 bg-white bg-opacity-10 px-6 py-4 rounded-lg w-full md:w-auto hover:bg-opacity-20 transition-all cursor-pointer">
+<span class="text-2xl">📞</span>
+<a href="tel:+639478702017" class="font-medium text-lg">+63 947 870 2017</a>
+</div>
+<div class="flex items-center gap-3 bg-white bg-opacity-10 px-6 py-4 rounded-lg w-full md:w-auto hover:bg-opacity-20 transition-all">
+<span class="text-2xl">📍</span>
+<span class="font-medium text-lg">Philippines (Remote)</span>
+</div>
+</div>
+
+<button onclick="window.print()" class="bg-secondary hover:bg-white hover:text-primary text-white px-8 py-4 rounded-lg font-bold text-lg transition-colors duration-300 shadow-lg flex items-center justify-center mx-auto gap-2">
+<span>📄</span> Download / Print CV
+</button>
+</div>
+</section>
+
+<footer class="bg-gray-900 text-gray-400 py-8 text-center">
+<p>&copy; <span id="year"></span> Cyril Santos. All rights reserved.</p>
+</footer>
+
+<script>
+document.getElementById('year').textContent = new Date().getFullYear();
+
+const navLinks = document.querySelectorAll('.nav-link');
+const sections = document.querySelectorAll('section');
+
+window.addEventListener('scroll', () => {
+let current = '';
+sections.forEach(section => {
+const sectionTop = section.offsetTop;
+const sectionHeight = section.clientHeight;
+if (pageYOffset >= (sectionTop - 150)) {
+current = section.getAttribute('id');
+}
+});
+
+navLinks.forEach(link => {
+link.classList.remove('active');
+if (link.getAttribute('href').includes(current)) {
+link.classList.add('active');
+}
+});
+});
+
+const tabBtns = document.querySelectorAll('.tab-btn');
+const tabContents = document.querySelectorAll('.tab-content');
+
+tabBtns.forEach(btn => {
+btn.addEventListener('click', () => {
+tabBtns.forEach(b => {
+b.classList.remove('active');
+b.classList.add('bg-white', 'text-primary');
+});
+btn.classList.add('active');
+btn.classList.remove('bg-white', 'text-primary');
+
+const targetId = btn.getAttribute('data-target');
+tabContents.forEach(content => {
+content.classList.remove('active');
+if (content.id === targetId) {
+content.classList.add('active');
+}
+});
+});
+});
+
+function toggleTimeline(btn) {
+const content = btn.nextElementSibling;
+const icon = btn.querySelector('.toggle-icon');
+
+const allContents = document.querySelectorAll('.timeline-content');
+const allIcons = document.querySelectorAll('.toggle-icon');
+const allBtns = document.querySelectorAll('.timeline-btn');
+
+allContents.forEach((c, index) => {
+if (c !== content && c.classList.contains('expanded')) {
+c.classList.remove('expanded');
+allIcons[index].textContent = '+';
+allBtns[index].classList.remove('bg-accent');
+allBtns[index].classList.add('bg-gray-50');
+}
+});
+
+content.classList.toggle('expanded');
+if (content.classList.contains('expanded')) {
+icon.textContent = '−';
+btn.classList.remove('bg-gray-50');
+btn.classList.add('bg-accent');
+} else {
+icon.textContent = '+';
+btn.classList.remove('bg-accent');
+btn.classList.add('bg-gray-50');
+}
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+const firstJob = document.querySelector('.timeline-btn');
+if(firstJob) toggleTimeline(firstJob);
+});
+
+const commonOptions = {
+responsive: true,
+maintainAspectRatio: false,
+plugins: {
+legend: { position: 'bottom', labels: { font: { family: 'Inter', size: 12 } } },
+tooltip: {
+backgroundColor: 'rgba(44, 62, 80, 0.9)',
+titleFont: { family: 'Inter', size: 14 },
+bodyFont: { family: 'Inter', size: 13 },
+padding: 10,
+cornerRadius: 4
+}
+},
+cutout: '70%',
+animation: { animateScale: true, animateRotate: true }
+};
+
+const accCtx = document.getElementById('accuracyChart').getContext('2d');
+new Chart(accCtx, {
+type: 'doughnut',
+data: {
+labels: ['Accuracy Achieved', 'Error Margin'],
+datasets: [{
+data: [99.9, 0.1],
+backgroundColor: ['#3498DB', '#E2E8F0'],
+borderWidth: 0,
+hoverOffset: 4
+}]
+},
+options: {
+...commonOptions,
+plugins: {
+...commonOptions.plugins,
+tooltip: {
+callbacks: {
+label: function(context) { return context.label + ': ' + context.raw + '%'; }
+}
+}
+}
+}
+});
+
+const resCtx = document.getElementById('resolutionChart').getContext('2d');
+new Chart(resCtx, {
+type: 'doughnut',
+data: {
+labels: ['Resolution Increase', 'Base Rate'],
+datasets: [{
+data: [20, 80],
+backgroundColor: ['#2C3E50', '#E2E8F0'],
+borderWidth: 0,
+hoverOffset: 4
+}]
+},
+options: {
+...commonOptions,
+plugins: {
+...commonOptions.plugins,
+tooltip: {
+callbacks: {
+label: function(context) { return context.label + ': ' + context.raw + '%'; }
+}
+}
+}
+}
+});
+
+const satCtx = document.getElementById('satisfactionChart').getContext('2d');
+new Chart(satCtx, {
+type: 'doughnut',
+data: {
+labels: ['Satisfaction Growth', 'Previous Baseline'],
+datasets: [{
+data: [15, 85],
+backgroundColor: ['#5DADE2', '#E2E8F0'],
+borderWidth: 0,
+hoverOffset: 4
+}]
+},
+options: {
+...commonOptions,
+plugins: {
+...commonOptions.plugins,
+tooltip: {
+callbacks: {
+label: function(context) { return context.label + ': ' + context.raw + '%'; }
+}
+}
+}
+}
+});
+</script>
+</body>
+</html>
